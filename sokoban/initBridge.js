@@ -1,18 +1,31 @@
 function initBridgeJs(callback) {
-    window.bridge.initialize({ forciblySetPlatformId: bridge.PLATFORM_ID.YANDEX })
-        .then(function () {
-            bridge.platform.sdk;
-            YaGames
-                .init()
-                .then(function (ysdk) {
-                    ysdk.features.LoadingAPI?.ready();
-                    window.game = bridge.platform;
-                    window.storage = bridge.storage;
-                    window.storageTypeLocal = bridge.STORAGE_TYPE.LOCAL_STORAGE;
-                    window.storageTypePlatform = bridge.STORAGE_TYPE.PLATFORM_INTERNAL;
-                    callback(window.game.language);
-                });
+    console.log('in init method');
+    vkBridge.send('VKWebAppInit')
+        .then((data) => {
+            if (data.result) {
+                console.log('init');
+
+            } else {
+                console.log('not init');
+            };
+        })
+        .catch((error) => {
+            console.log(error);
         });
+
+    window.bridge.initialize()
+        .then(() => {
+        bridge.platform.sdk;
+            window.game = bridge.platform;
+            window.storage = bridge.storage;
+            window.storageTypeLocal = bridge.STORAGE_TYPE.LOCAL_STORAGE;
+            window.storageTypePlatform = bridge.STORAGE_TYPE.PLATFORM_INTERNAL;
+            callback("call OK");
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
 }
 
 function loadFromSdk(key, callback) {
@@ -98,7 +111,7 @@ function updateLeaderboardJs(scores, callback) {
 
         let getScoreOptions = {
             'yandex': {
-                leaderboardName: 'scoresLeaderboard',
+                leaderboardName: 'scoresLeaderboard1',
             }
         }
         bridge.leaderboard.getScore(getScoreOptions)
@@ -107,7 +120,7 @@ function updateLeaderboardJs(scores, callback) {
                 if (getScores < scores) {
                     let setScoreOptions = {
                         'yandex': {
-                            leaderboardName: 'scoresLeaderboard',
+                            leaderboardName: 'scoresLeaderboard1',
                             score: scores
                         }
                     }
