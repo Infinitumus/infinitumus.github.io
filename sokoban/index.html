@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+    <title>SokobanGame</title>
+    <script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
+    <script defer src="./instant-games-bridge.js"></script>>
+    <script defer src="./initBridge.js"></script>>
+
+</head>
+
+<body>
+
+<div align="center" id="embed-html"></div>
+<script type="text/javascript" src="html/html.nocache.js"></script>
+</body>
+
+<script>
+              function handleMouseDown(evt) {
+                evt.preventDefault();
+                evt.stopPropagation();
+                window.focus();
+              }
+
+              function handleMouseUp(evt) {
+                evt.preventDefault();
+                evt.stopPropagation();
+              }
+              document.addEventListener('contextmenu', event => event.preventDefault());
+              document.getElementById('embed-html').addEventListener('mousedown', handleMouseDown, false);
+              document.getElementById('embed-html').addEventListener('mouseup', handleMouseUp, false);
+
+
+</script>
+</html>
