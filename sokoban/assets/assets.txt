@@ -6,9 +6,9 @@ t:atlas/homes.atlas:atlas/homes-150be0b5d7d0937893919b8f9fdf49f0.atlas:280:appli
 i:atlas/homes.png:atlas/homes-a28502c4777143e6f288f42757af5a24.png:95094:image/png:1
 t:atlas/player.atlas:atlas/player-036e89e7500163c9e55c4a176bc20520.atlas:66:application/unknown:1
 i:atlas/player.png:atlas/player-3071f006659e1da1e8a964a8ded734f0.png:90817:image/png:1
-t:atlas/uiAtlas.atlas:atlas/uiAtlas-7699e03824fe567ab21a9a67fe46d7e2.atlas:1783:application/unknown:1
-i:atlas/uiAtlas.png:atlas/uiAtlas-e8e775772b86fd77cf1153aa7c40dabf.png:3692674:image/png:1
-i:atlas/uiAtlas2.png:atlas/uiAtlas2-dda0b4cce68853d06953ca5c3ec2a29f.png:3378214:image/png:1
+t:atlas/uiAtlas.atlas:atlas/uiAtlas-9110c0dc08abcf275a950cd8ac0f88f4.atlas:1448:application/unknown:1
+i:atlas/uiAtlas.png:atlas/uiAtlas-3244f2c03df3b19070c3f11f4c1cd9cd.png:3690473:image/png:1
+i:atlas/uiAtlas2.png:atlas/uiAtlas2-5fcaf4dc9520f48d2180e544aec60253.png:3166775:image/png:1
 t:atlas/walls.atlas:atlas/walls-d22c329e01957f0055df34572afcc5a0.atlas:497:application/unknown:1
 i:atlas/walls.png:atlas/walls-d479fb781a3c8bb9052d3d7b92b5d12f.png:1498055:image/png:1
 d:fonts:fonts:0:application/unknown:1
