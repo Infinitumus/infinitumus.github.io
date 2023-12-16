@@ -1,21 +1,3 @@
-function initBridgeJs123(callback) {
-    window.bridge.initialize({ forciblySetPlatformId: bridge.PLATFORM_ID.YANDEX })
-        .then(function () {
-            bridge.platform.sdk;
-            YaGames
-                .init()
-                .then(function (ysdk) {
-                    showAdwJs();
-                    ysdk.features.LoadingAPI?.ready();
-                    window.game = bridge.platform;
-                    window.storage = bridge.storage;
-                    window.storageTypeLocal = bridge.STORAGE_TYPE.LOCAL_STORAGE;
-                    window.storageTypePlatform = bridge.STORAGE_TYPE.PLATFORM_INTERNAL;
-                    callback(window.game.language);
-                });
-        });
-}
-
 function initBridgeJs(callback) {
     bridge.initialize()
         .then(function () {
@@ -83,29 +65,6 @@ function loadFromSdk(key, callback) {
                 callback(resultLocal);
             });
     }
-}
-
-function loadFromPlatform(key, callback) {
-
-    var resultPlatform;
-    var curLevel = window.level;
-    var name = bridge.player.name;
-
-    window.storage.get(key, window.storageTypePlatform)
-        .then(function (data) {
-            if (data === null || typeof data === 'undefined') {
-                resultPlatform = '1 1000';
-            } else {
-                resultPlatform = data.toString();
-            }
-            var splitResPl = resultPlatform.split(' ');
-            var levelPl = splitResPl[0];
-            if (levelPl >= curLevel) {
-                curLevel = levelPl;
-                window.storage.set(key, resultPlatform, window.storageTypeLocal);
-            }
-            callback(resultPlatform + ' ' + name);
-        });
 }
 
 function updateLeaderboardJs(scores, callback) {
@@ -194,8 +153,4 @@ function adwStateJs(callback) {
 }
 function showRewardedAdwJs(){
     bridge.advertisement.showRewarded();
-}
-function rewardedAdwStateJs(callback){
-    bridge.advertisement.on(bridge.EVENT_NAME.REWARDED_STATE_CHANGED,
-        state => callback(state));
 }
