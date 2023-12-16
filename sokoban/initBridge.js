@@ -1,31 +1,34 @@
+function initBridgeJs123(callback) {
+    window.bridge.initialize({ forciblySetPlatformId: bridge.PLATFORM_ID.YANDEX })
+        .then(function () {
+            bridge.platform.sdk;
+            YaGames
+                .init()
+                .then(function (ysdk) {
+                    showAdwJs();
+                    ysdk.features.LoadingAPI?.ready();
+                    window.game = bridge.platform;
+                    window.storage = bridge.storage;
+                    window.storageTypeLocal = bridge.STORAGE_TYPE.LOCAL_STORAGE;
+                    window.storageTypePlatform = bridge.STORAGE_TYPE.PLATFORM_INTERNAL;
+                    callback(window.game.language);
+                });
+        });
+}
+
 function initBridgeJs(callback) {
-    console.log('in init method');
-    vkBridge.send('VKWebAppInit')
-        .then((data) => {
-            if (data.result) {
-                console.log('init');
-
-            } else {
-                console.log('not init');
-            };
-        })
-        .catch((error) => {
-            console.log(error);
+    bridge.initialize()
+        .then(function () {
+                    bridge.platform.sdk;
+                    showAdwJs();
+                    window.game = bridge.platform;
+                    let message = 'game_ready';
+                    game.sendMessage(message);
+                    window.storage = bridge.storage;
+                    window.storageTypeLocal = bridge.STORAGE_TYPE.LOCAL_STORAGE;
+                    window.storageTypePlatform = bridge.STORAGE_TYPE.PLATFORM_INTERNAL;
+                    callback(window.game.language);
         });
-
-    window.bridge.initialize()
-        .then(() => {
-        bridge.platform.sdk;
-            window.game = bridge.platform;
-            window.storage = bridge.storage;
-            window.storageTypeLocal = bridge.STORAGE_TYPE.LOCAL_STORAGE;
-            window.storageTypePlatform = bridge.STORAGE_TYPE.PLATFORM_INTERNAL;
-            callback("call OK");
-        })
-        .catch(error => {
-            console.log(error);
-        });
-
 }
 
 function loadFromSdk(key, callback) {
@@ -106,9 +109,7 @@ function loadFromPlatform(key, callback) {
 }
 
 function updateLeaderboardJs(scores, callback) {
-    var getS
-    if (bridge.player.isAuthorized) {
-
+       if (bridge.player.isAuthorized) {
         let getScoreOptions = {
             'yandex': {
                 leaderboardName: 'scoresLeaderboard1',
@@ -116,7 +117,6 @@ function updateLeaderboardJs(scores, callback) {
         }
         bridge.leaderboard.getScore(getScoreOptions)
             .then(function (getScores) {
-                getS = getScores;
                 if (getScores < scores) {
                     let setScoreOptions = {
                         'yandex': {
@@ -135,7 +135,20 @@ function updateLeaderboardJs(scores, callback) {
                 }
             })
             .catch(function (error) {
-                console.log(error);
+                let setScoreOptions = {
+                                        'yandex': {
+                                            leaderboardName: 'scoresLeaderboard1',
+                                            score: scores
+                                        }
+                                    }
+                                    bridge.leaderboard.setScore(setScoreOptions)
+                                        .then(function () {
+                                            console.log('Liderboard Update');
+                                        })
+                                        .catch(function (error) {
+                                            console.log(error);
+                                        });
+                                    callback('update scores ' + scores);
             });
     } else {
         callback('update scores failed you are not auth');
@@ -178,4 +191,11 @@ function adwStateJs(callback) {
         function (state) {
             callback(state);
         });
+}
+function showRewardedAdwJs(){
+    bridge.advertisement.showRewarded();
+}
+function rewardedAdwStateJs(callback){
+    bridge.advertisement.on(bridge.EVENT_NAME.REWARDED_STATE_CHANGED,
+        state => callback(state));
 }
