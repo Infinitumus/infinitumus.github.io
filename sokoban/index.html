@@ -3,17 +3,15 @@
 <head>
     <title>SokobanGame</title>
     <script defer src="./instant-games-bridge.js"></script>
-    <script defer src="./initBridge.js"></script>>
+    <script defer src="./initBridge.js"></script>
+    >
+    <link href="styles.css" rel="stylesheet">
 </head>
 
-<body>
-<script>
-
-
-</script>>
-
-<div align="center" id="embed-html"></div>
-<script type="text/javascript" src="html/html.nocache.js"></script>
+<body class="noselect">
+<div class="noselect" align="center" id="embed-html">
+    <script class="noselect" type="text/javascript" src="html/html.nocache.js"></script>
+</div>
 </body>
 
 <script>
@@ -30,6 +28,11 @@
               document.addEventListener('contextmenu', event => event.preventDefault());
               document.getElementById('embed-html').addEventListener('mousedown', handleMouseDown, false);
               document.getElementById('embed-html').addEventListener('mouseup', handleMouseUp, false);
+              document.addEventListener('keydown', function(event) {
+                       if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+                                event.preventDefault();
+                       }
+              });
 
 
 </script>

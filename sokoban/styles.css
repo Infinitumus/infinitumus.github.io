@@ -4,7 +4,16 @@ canvas {
 }
 
 body {
-    background-color: #222222;
+    background-color: #000000;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Старые версии Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Непрефиксированная версия, поддерживается в настоящее время Chrome, Edge, Opera и Firefox */
 }
 
 .superdev {

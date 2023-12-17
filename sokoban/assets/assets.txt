@@ -7,7 +7,7 @@ i:atlas/homes.png:atlas/homes-a28502c4777143e6f288f42757af5a24.png:95094:image/p
 t:atlas/player.atlas:atlas/player-036e89e7500163c9e55c4a176bc20520.atlas:66:application/unknown:1
 i:atlas/player.png:atlas/player-3071f006659e1da1e8a964a8ded734f0.png:90817:image/png:1
 t:atlas/uiAtlas.atlas:atlas/uiAtlas-0a878a3d1742b8ce4ec31dc94b13857c.atlas:1490:application/unknown:1
-i:atlas/uiAtlas.png:atlas/uiAtlas-3244f2c03df3b19070c3f11f4c1cd9cd.png:3690473:image/png:1
+i:atlas/uiAtlas.png:atlas/uiAtlas-7b45d3340a46cef1cd352431c1e56c96.png:3690496:image/png:1
 i:atlas/uiAtlas2.png:atlas/uiAtlas2-5712339a5fe624dcebbe12c14d78684b.png:3244235:image/png:1
 t:atlas/walls.atlas:atlas/walls-d22c329e01957f0055df34572afcc5a0.atlas:497:application/unknown:1
 i:atlas/walls.png:atlas/walls-d479fb781a3c8bb9052d3d7b92b5d12f.png:1498055:image/png:1
@@ -24,7 +24,7 @@ t:levels.txt:levels-fd020e29392fa65644126d6eeee84bce.txt:27021:text/plain:1
 d:locale:locale:0:application/unknown:1
 b:locale/strings_en.properties:locale/strings_en-b1f030522234098f7159843ea406f161.properties:858:application/unknown:1
 b:locale/strings_ru.properties:locale/strings_ru-d0fea26e2ecec055226ff6f225097c3f.properties:1466:application/unknown:1
-b:locale/strings_tr.properties:locale/strings_tr-d1ab5ad102f3f973835037156182e105.properties:985:application/unknown:1
+b:locale/strings_tr.properties:locale/strings_tr-854c24ab940c1560a6530ccb5a22901a.properties:988:application/unknown:1
 i:screen1.png:screen1-7ff5f6a649898a4e1417126ab5ae1873.png:161734:image/png:1
 t:com/badlogic/gdx/graphics/g3d/particles/particles.fragment.glsl:particles.fragment-b90524761fdf09b0a836056d590c30b8.glsl:820:application/unknown:1
 t:com/badlogic/gdx/graphics/g3d/particles/particles.vertex.glsl:particles.vertex-f25b8b2fae10b9bfa09bfdd484923148.glsl:2886:application/unknown:1
