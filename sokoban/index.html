@@ -25,13 +25,17 @@
                 evt.preventDefault();
                 evt.stopPropagation();
               }
-              arrowUp.addEventListener('click', function() => {});
-              arrowDown.addEventListener('click', function() => {});
 
               document.addEventListener('contextmenu', event => event.preventDefault());
               document.getElementById('embed-html').addEventListener('mousedown', handleMouseDown, false);
               document.getElementById('embed-html').addEventListener('mouseup', handleMouseUp, false);
               document.getElementById('embed-html').addEventListener('keydown', function(event) {
+
+                                event.preventDefault();
+                                event.stopPropagation();
+
+              });
+              document.addEventListener('keydown', function(event) {
 
                                 event.preventDefault();
                                 event.stopPropagation();
