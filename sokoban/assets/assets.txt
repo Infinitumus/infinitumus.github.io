@@ -14,7 +14,7 @@ d:fonts:fonts:0:application/unknown:1
 t:fonts/sedoeScriptBlack.fnt:fonts/sedoeScriptBlack-7b63fc6fd80e138d5f38322acaf06aa4.fnt:20572:application/unknown:1
 i:fonts/sedoeScriptBlack1.png:fonts/sedoeScriptBlack1-514e733d03b4f90b22ec4be234d47904.png:85162:image/png:1
 i:fonts/sedoeScriptBlack2.png:fonts/sedoeScriptBlack2-0b7319c4b94308c6e4f8965fb45ec491.png:52867:image/png:1
-b:instant-games-bridge.js:instant-games-bridge-1bb972479f9113bb237b34cbccc2749c.js:99073:text/javascript:1
+b:instant-games-bridge.js:instant-games-bridge-c9dad5b114eb53f9ad0624fda5cedcbb.js:87902:text/javascript:1
 t:levels.txt:levels-fd020e29392fa65644126d6eeee84bce.txt:27021:text/plain:1
 d:locale:locale:0:application/unknown:1
 b:locale/strings_en.properties:locale/strings_en-442067fd3f904d436ef21316e4a70384.properties:1617:application/unknown:1
