@@ -11,9 +11,9 @@ i:atlas/uiAtlas.png:atlas/uiAtlas-b6e38b3d0f047ca69504ba77c053e7bd.png:1872944:i
 t:atlas/walls.atlas:atlas/walls-d22c329e01957f0055df34572afcc5a0.atlas:497:application/unknown:1
 i:atlas/walls.png:atlas/walls-d479fb781a3c8bb9052d3d7b92b5d12f.png:1498055:image/png:1
 d:fonts:fonts:0:application/unknown:1
-t:fonts/sedoeScriptBlack.fnt:fonts/sedoeScriptBlack-ff4d7e67d5ed38f87854fad8dba34dc6.fnt:20572:application/unknown:1
-i:fonts/sedoeScriptBlack1.png:fonts/sedoeScriptBlack1-7adf69ad0bf25e0ac34e78e0e248eaac.png:84641:image/png:1
-i:fonts/sedoeScriptBlack2.png:fonts/sedoeScriptBlack2-50f2df38cb0e54d5a2deae802e743900.png:53424:image/png:1
+t:fonts/sedoeScriptBlack.fnt:fonts/sedoeScriptBlack-0b1aa5e127fccd50d2178c42d7578ccd.fnt:20572:application/unknown:1
+i:fonts/sedoeScriptBlack1.png:fonts/sedoeScriptBlack1-da82f8292d440fd34cc7edb5c5e71fa9.png:80120:image/png:1
+i:fonts/sedoeScriptBlack2.png:fonts/sedoeScriptBlack2-4427c04d97da91b5ce8eadf8ea54f5bd.png:59320:image/png:1
 b:instant-games-bridge.js:instant-games-bridge-1bb972479f9113bb237b34cbccc2749c.js:99073:text/javascript:1
 t:levels.txt:levels-fd020e29392fa65644126d6eeee84bce.txt:27021:text/plain:1
 d:locale:locale:0:application/unknown:1
