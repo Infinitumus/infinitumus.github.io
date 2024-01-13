@@ -2,7 +2,6 @@ function initBridgeJs(callback) {
     bridge.initialize()
         .then(function () {
                     bridge.platform.sdk;
-                    showAdwJs();
                     window.game = bridge.platform;
                     let message = 'game_ready';
                     game.sendMessage(message);
