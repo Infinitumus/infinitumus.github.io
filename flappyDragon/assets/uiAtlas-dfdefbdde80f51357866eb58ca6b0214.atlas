@@ -1,0 +1,11 @@
+uiAtlas.png
+size:512,128
+repeat:none
+continueButton
+bounds:2,2,100,80
+moreGamesButton
+bounds:332,20,100,100
+playButton
+bounds:230,7,100,113
+scoresPanel
+bounds:2,84,226,36
