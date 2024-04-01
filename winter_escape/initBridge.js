@@ -55,22 +55,23 @@ function initAudio() {
 function initBridgeJs(callback) {
 
 
-        initSoundManager().then(bridge.initialize()
-                                                        .then(function () {
-                                                                    bridge.platform.sdk;
-                                                                    window.game = bridge.platform;
-                                                                    let message = 'game_ready';
-                                                                    game.sendMessage(message);
-                                                                    showAdwJs();
-                                                                    window.storage = bridge.storage;
-                                                                    window.storageTypeLocal = bridge.STORAGE_TYPE.LOCAL_STORAGE;
-                                                                    window.storageTypePlatform = bridge.STORAGE_TYPE.PLATFORM_INTERNAL;
-                                                                    var lang = bridge.platform.language;
-                                                                    var domain = bridge.platform.tld;
-                                                                    callback(lang + ' ' + domain);
-                                                        }));
 
-}
+        initAudio().then(bridge.initialize()
+                               .then(function () {
+                                                bridge.platform.sdk;
+                                                             window.game = bridge.platform;
+                                                             let message = 'game_ready';
+                                                             game.sendMessage(message);
+                                                             showAdwJs();
+                                                             window.storage = bridge.storage;
+                                                             window.storageTypeLocal = bridge.STORAGE_TYPE.LOCAL_STORAGE;
+                                                             window.storageTypePlatform = bridge.STORAGE_TYPE.PLATFORM_INTERNAL;
+                                                             var lang = bridge.platform.language;
+       var domain = bridge.platform.tld;
+      callback(lang + ' ' + domain);
+         }));
+    }
+
 
 
 
