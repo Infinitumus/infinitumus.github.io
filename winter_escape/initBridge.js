@@ -290,3 +290,16 @@ function adwRewardedStateJs(callback) {
             callback(state);
         });
 }
+
+function inviteFriendsJs(callback){
+    if (bridge.social.isInviteFriendsSupported){
+        bridge.social.inviteFriends()
+            .then(() => {
+                callback('success')
+            })
+            .catch(error => {
+                console.log(error);
+                callback('not supported');
+            });
+    }
+}
