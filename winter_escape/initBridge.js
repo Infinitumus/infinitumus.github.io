@@ -60,8 +60,8 @@ vkBridge.send('VKWebAppInit');
                                                         .then(function () {
                                                                     bridge.platform.sdk;
                                                                     window.game = bridge.platform;
-                                                                    //let message = 'game_ready';
-                                                                   // game.sendMessage(message);
+                                                                    let message = 'game_ready';
+                                                                    game.sendMessage(message);
                                                                     showAdwJs();
                                                                     window.storage = bridge.storage;
                                                                     window.storageTypeLocal = bridge.STORAGE_TYPE.LOCAL_STORAGE;
