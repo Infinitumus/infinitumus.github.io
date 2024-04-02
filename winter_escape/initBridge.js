@@ -53,7 +53,7 @@ function initAudio() {
 }
 
 function initBridgeJs(callback) {
-//vkBridge.send('VKWebAppInit');
+vkBridge.send('VKWebAppInit');
 
     if (/iPad|iPhone|iPod/.test(userAgent1) && !window.MSStream || /Mac/i.test(userAgent1)) {
         initSoundManager().then(bridge.initialize()
