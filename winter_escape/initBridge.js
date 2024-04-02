@@ -303,3 +303,21 @@ function inviteFriendsJs(callback){
             });
     }
 }
+
+function shareJs(callback){
+if (bridge.social.isShareSupported){
+    let shareOptions = {
+        'vk': {
+            link: 'https://vk.com/app51892854'
+        }
+    };
+    bridge.social.share(shareOptions)
+        .then(() => {
+            callback('success share')
+        })
+        .catch(error => {
+            console.log(error);
+            callback('not supported');
+        });
+    }
+}

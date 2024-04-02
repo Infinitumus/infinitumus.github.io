@@ -9,9 +9,9 @@ i:fonts/sedoeScriptBlack2.png:fonts/sedoeScriptBlack2-0b7319c4b94308c6e4f8965fb4
 i:gameover.png:gameover-aa6d61ffb60e1651fbdd535b3a240668.png:7699:image/png:1
 i:ground.png:ground-edfdf7041c60727804ee1e165fc50605.png:347127:image/png:1
 d:locale:locale:0:application/unknown:1
-b:locale/strings_en.properties:locale/strings_en-354096aacbfb997be732cd65b695f5de.properties:659:application/unknown:1
-b:locale/strings_ru.properties:locale/strings_ru-c180a0ae540540e58a305288df655fa9.properties:1087:application/unknown:1
-b:locale/strings_tr.properties:locale/strings_tr-b0f24dd7888c55b1b03fdc05956f9dd1.properties:733:application/unknown:1
+b:locale/strings_en.properties:locale/strings_en-2e39f86f9c9cdad44027e860c17d74a0.properties:672:application/unknown:1
+b:locale/strings_ru.properties:locale/strings_ru-fb2441722414bc1388c9864e11b2a93d.properties:1113:application/unknown:1
+b:locale/strings_tr.properties:locale/strings_tr-5f660fb9ad758cd868283ec932bc9cc9.properties:748:application/unknown:1
 a:metallicheskiy-zvon.ogg:metallicheskiy-zvon-2378ae83fd7072bee0c5159a85a68571.ogg:8433:audio/ogg:1
 a:moschnyiy-reshitelnyiy-udar-s-grohotom.ogg:moschnyiy-reshitelnyiy-udar-s-grohotom-561b9dd05b8068055934f554ebd2b37c.ogg:31947:audio/ogg:1
 a:sfx_wing.ogg:sfx_wing-e34cb4c6c2967438f5c0dc8b11de0663.ogg:7728:audio/ogg:1
