@@ -321,3 +321,22 @@ if (bridge.social.isShareSupported){
         });
     }
 }
+
+function createPostJs(scores, callback){
+if (bridge.social.isCreatePostSupported){
+    let createPostOptions = {
+        'vk': {
+            message: 'Hello world!',
+            attachments: 'photo-199747461_457239629'
+        }
+    };
+    bridge.social.createPost(createPostOptions)
+        .then(() => {
+            callback('success create')
+        })
+        .catch(error => {
+            console.log(error);
+            callback('not supported');
+        });
+    }
+}
