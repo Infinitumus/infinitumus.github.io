@@ -53,15 +53,15 @@ function initAudio() {
 }
 
 function initBridgeJs(callback) {
-vkBridge.send('VKWebAppInit');
+//vkBridge.send('VKWebAppInit');
 
     if (/iPad|iPhone|iPod/.test(userAgent1) && !window.MSStream || /Mac/i.test(userAgent1)) {
         initSoundManager().then(bridge.initialize()
                                                         .then(function () {
                                                                     bridge.platform.sdk;
                                                                     window.game = bridge.platform;
-                                                                    let message = 'game_ready';
-                                                                    game.sendMessage(message);
+                                                                    //let message = 'game_ready';
+                                                                   // game.sendMessage(message);
                                                                     showAdwJs();
                                                                     window.storage = bridge.storage;
                                                                     window.storageTypeLocal = bridge.STORAGE_TYPE.LOCAL_STORAGE;
