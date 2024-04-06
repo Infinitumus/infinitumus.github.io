@@ -326,8 +326,8 @@ function createPostJs(scores, callback){
 if (bridge.social.isCreatePostSupported){
     let createPostOptions = {
         'vk': {
-            message: 'Hello world!',
-            attachments: 'photo-199747461_457239629'
+            message: 'Я только что установил новый личный рекорд в игре: ${scores} очков! А ты сможешь лучше? Попробуй обогнать меня и поделись своим результатом!'
+            attachments: 'photo-130400729_457248949'
         }
     };
     bridge.social.createPost(createPostOptions)
