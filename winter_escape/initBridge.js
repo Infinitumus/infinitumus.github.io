@@ -322,21 +322,35 @@ if (bridge.social.isShareSupported){
     }
 }
 
-function createPostJs(scores, callback){
-if (bridge.social.isCreatePostSupported){
-    let createPostOptions = {
-        'vk': {
-            message: 'Я только что установил новый личный рекорд в игре: ' + scores + ' очков! А ты сможешь лучше? Попробуй обогнать меня и поделись своим результатом!',
-            attachments: 'photo-199747461_457239629'
-        }
-    };
-    bridge.social.createPost(createPostOptions)
-        .then(() => {
-            callback('success create')
-        })
-        .catch(error => {
-            console.log(error);
-            callback('not supported');
-        });
+function getScoreWord(score) {
+    let remainder10 = score % 10;
+    let remainder100 = score % 100;
+
+    if (remainder10 === 1 && remainder100 !== 11) {
+        return 'очко';
+    } else if (remainder10 >= 2 && remainder10 <= 4 && (remainder100 < 10 || remainder100 >= 20)) {
+        return 'очка';
+    } else {
+        return 'очков';
+    }
+}
+
+function createPostJs(scores, callback) {
+    if (bridge.social.isCreatePostSupported) {
+        let scoreWord = getScoreWord(scores);
+        let createPostOptions = {
+            'vk': {
+                message: 'Я только что установил новый личный рекорд в игре: ' + scores + ' ' + scoreWord + '! А ты сможешь лучше? Попробуй обогнать меня и поделись своим результатом! \n https://vk.com/app51892854',
+                attachments: ''
+            }
+        };
+        bridge.social.createPost(createPostOptions)
+            .then(() => {
+                callback('success create');
+            })
+            .catch(error => {
+                console.log(error);
+                callback('not supported');
+            });
     }
 }
