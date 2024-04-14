@@ -34,23 +34,20 @@
 
               function resizeGame() {
   var gameArea = document.getElementById('embed-html');
-  var widthToHeight = 4 / 3;
+  var widthToHeight = 4 / 3; 
   var newWidth = window.innerWidth;
   var newHeight = window.innerHeight;
   var newWidthToHeight = newWidth / newHeight;
 
   if (newWidthToHeight > widthToHeight) {
     newWidth = newHeight * widthToHeight;
-    gameArea.style.height = newHeight + 'px';
+    gameArea.style.height = '100%';
     gameArea.style.width = newWidth + 'px';
   } else {
     newHeight = newWidth / widthToHeight;
-    gameArea.style.width = newWidth + 'px';
+    gameArea.style.width = '100%';
     gameArea.style.height = newHeight + 'px';
   }
-
-  gameArea.style.marginTop = (-newHeight / 2) + 'px';
-  gameArea.style.marginLeft = (-newWidth / 2) + 'px';
 }
 
 
