@@ -16,8 +16,8 @@ a:metallicheskiy-zvon.ogg:metallicheskiy-zvon-2378ae83fd7072bee0c5159a85a68571.o
 a:moschnyiy-reshitelnyiy-udar-s-grohotom.ogg:moschnyiy-reshitelnyiy-udar-s-grohotom-561b9dd05b8068055934f554ebd2b37c.ogg:31947:audio/ogg:1
 a:sfx_wing.ogg:sfx_wing-e34cb4c6c2967438f5c0dc8b11de0663.ogg:7728:audio/ogg:1
 i:toptube.png:toptube-13eaf61de8e40a920e8c2ce71b59fcc1.png:111751:image/png:1
-t:uiAtlas.atlas:uiAtlas-da8f9c002891094f4da706ac6518e638.atlas:303:application/unknown:1
-i:uiAtlas.png:uiAtlas-8a6d6afdee94e0066f8e5664ce9ff4f2.png:210250:image/png:1
+t:uiAtlas.atlas:uiAtlas-c23a26b0e1879d6f18703f48fe32984e.atlas:374:application/unknown:1
+i:uiAtlas.png:uiAtlas-f94e267a9f04129869810eea9e637275.png:312421:image/png:1
 t:com/badlogic/gdx/graphics/g3d/particles/particles.fragment.glsl:particles.fragment-b90524761fdf09b0a836056d590c30b8.glsl:820:application/unknown:1
 t:com/badlogic/gdx/graphics/g3d/particles/particles.vertex.glsl:particles.vertex-f25b8b2fae10b9bfa09bfdd484923148.glsl:2886:application/unknown:1
 t:com/badlogic/gdx/graphics/g3d/shaders/default.fragment.glsl:default.fragment-e1c018bd48044c8b67c7bbc53145e540.glsl:5874:application/unknown:1

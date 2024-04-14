@@ -62,7 +62,7 @@ vkBridge.send('VKWebAppInit');
                                                                     window.game = bridge.platform;
                                                                     let message = 'game_ready';
                                                                     game.sendMessage(message);
-                                                                    showAdwJs();
+
                                                                     window.storage = bridge.storage;
                                                                     window.storageTypeLocal = bridge.STORAGE_TYPE.LOCAL_STORAGE;
                                                                     window.storageTypePlatform = bridge.STORAGE_TYPE.PLATFORM_INTERNAL;
@@ -77,7 +77,7 @@ vkBridge.send('VKWebAppInit');
                                                              window.game = bridge.platform;
                                                              let message = 'game_ready';
                                                              game.sendMessage(message);
-                                                             showAdwJs();
+
                                                              window.storage = bridge.storage;
                                                              window.storageTypeLocal = bridge.STORAGE_TYPE.LOCAL_STORAGE;
                                                              window.storageTypePlatform = bridge.STORAGE_TYPE.PLATFORM_INTERNAL;
