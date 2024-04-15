@@ -32,5 +32,13 @@
               document.getElementById('embed-html').addEventListener('mousedown', handleMouseDown, false);
               document.getElementById('embed-html').addEventListener('mouseup', handleMouseUp, false);
 
+              window.addEventListener('resize', function() {
+
+       var width = window.innerWidth;
+       var height = window.innerHeight;
+
+
+       libGDXApp.resize(width, height);
+   });
        </script>
 </html>
