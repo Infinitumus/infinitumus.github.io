@@ -32,26 +32,5 @@
               document.getElementById('embed-html').addEventListener('mousedown', handleMouseDown, false);
               document.getElementById('embed-html').addEventListener('mouseup', handleMouseUp, false);
 
-              function resizeGame() {
-  var gameArea = document.getElementById('embed-html');
-  var widthToHeight = 16 / 9;
-  var newWidth = window.innerWidth;
-  var newHeight = window.innerHeight;
-  var newWidthToHeight = newWidth / newHeight;
-
-  if (newWidthToHeight > widthToHeight) {
-    newWidth = newHeight * widthToHeight;
-    gameArea.style.height = '100%';
-    gameArea.style.width = newWidth + 'px';
-  } else {
-    newHeight = newWidth / widthToHeight;
-    gameArea.style.width = '100%';
-    gameArea.style.height = newHeight + 'px';
-  }
-}
-
-
-window.addEventListener('resize', resizeGame, false);
-window.addEventListener('load', resizeGame, false);
        </script>
 </html>
