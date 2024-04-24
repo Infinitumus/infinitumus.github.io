@@ -6,143 +6,145 @@ var startTime = 0;
 var userAgent1 = navigator.userAgent || navigator.vendor || window.opera;
 
 function initSoundManager() {
-  return new Promise((resolve) => {
-    soundManager.onready(() => {
-      soundManager.defaultOptions = {
-        autoLoad: true,
-        stream: true
-      };
+    return new Promise((resolve) => {
+        soundManager.onready(() => {
+            soundManager.defaultOptions = {
+                autoLoad: true,
+                stream: true
+            };
 
-      soundManager.createSound({
-        id: 'mySound',
-        url: './music/music.ogg',
-        onfinish: resolve // вызывается, когда звук загружен и готов к использованию
-      });
+            soundManager.createSound({
+                id: 'mySound',
+                url: './music/music.ogg',
+                onfinish: resolve // вызывается, когда звук загружен и готов к использованию
+            });
+        });
     });
-  });
 }
 
 function initAudio() {
-  return new Promise((resolve, reject) => {
-    if (!audioContext) {
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    }
-    // Загрузка звукового файла
-    var request = new XMLHttpRequest();
-    request.open('GET', './music/music.ogg', true);
-    request.responseType = 'arraybuffer';
+    return new Promise((resolve, reject) => {
+        if (!audioContext) {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        // Загрузка звукового файла
+        var request = new XMLHttpRequest();
+        request.open('GET', './music/music.ogg', true);
+        request.responseType = 'arraybuffer';
 
-    request.onload = function () {
-      audioContext.decodeAudioData(request.response, function (buffer) {
-        // Успешно декодированный буфер
-        soundSource = audioContext.createBufferSource();
-        soundSource.buffer = buffer;
-        soundSource.connect(audioContext.destination);
-        soundSource.loop = true;
-        soundSource.src = '';
+        request.onload = function () {
+            audioContext.decodeAudioData(request.response, function (buffer) {
+                // Успешно декодированный буфер
+                soundSource = audioContext.createBufferSource();
+                soundSource.buffer = buffer;
+                soundSource.connect(audioContext.destination);
+                soundSource.loop = true;
+                soundSource.src = '';
 
-      }, function (error) {
-        console.error('Error decoding audio file', error);
-        reject(error); // Отклоняем Promise в случае ошибки
-      });
-    };
+            }, function (error) {
+                console.error('Error decoding audio file', error);
+                reject(error); // Отклоняем Promise в случае ошибки
+            });
+        };
 
-    request.send();
-    resolve();
-  });
+        request.send();
+        resolve();
+    });
 }
 
 function initBridgeJs(callback) {
-vkBridge.send('VKWebAppInit');
+    vkBridge.send('VKWebAppInit');
 
     if (/iPad|iPhone|iPod/.test(userAgent1) && !window.MSStream || /Mac/i.test(userAgent1)) {
         initSoundManager().then(bridge.initialize()
-                                                        .then(function () {
-                                                                    bridge.platform.sdk;
-                                                                    window.game = bridge.platform;
-                                                                    let message = 'game_ready';
-                                                                    game.sendMessage(message);
+            .then(function () {
+                bridge.platform.sdk;
+                window.game = bridge.platform;
+                let message = 'game_ready';
+                game.sendMessage(message);
 
-                                                                    window.storage = bridge.storage;
-                                                                    window.storageTypeLocal = bridge.STORAGE_TYPE.LOCAL_STORAGE;
-                                                                    window.storageTypePlatform = bridge.STORAGE_TYPE.PLATFORM_INTERNAL;
-                                                                    var lang = bridge.platform.language;
-                                                                    var domain = bridge.platform.tld;
-                                                                    callback(lang + ' ' + domain);
-                                                        }));
-    }else {
+                window.storage = bridge.storage;
+                window.storageTypeLocal = bridge.STORAGE_TYPE.LOCAL_STORAGE;
+                window.storageTypePlatform = bridge.STORAGE_TYPE.PLATFORM_INTERNAL;
+                var lang = bridge.platform.language;
+                var domain = bridge.platform.tld;
+                callback(lang + ' ' + domain);
+            }));
+    } else {
         initAudio().then(bridge.initialize()
-                               .then(function () {
-                                                bridge.platform.sdk;
-                                                             window.game = bridge.platform;
-                                                             let message = 'game_ready';
-                                                             game.sendMessage(message);
+            .then(function () {
+                bridge.platform.sdk;
+                window.game = bridge.platform;
+                let message = 'game_ready';
+                game.sendMessage(message);
 
-                                                             window.storage = bridge.storage;
-                                                             window.storageTypeLocal = bridge.STORAGE_TYPE.LOCAL_STORAGE;
-                                                             window.storageTypePlatform = bridge.STORAGE_TYPE.PLATFORM_INTERNAL;
-                                                             var lang = bridge.platform.language;
-       var domain = bridge.platform.tld;
-      callback(lang + ' ' + domain);
-         }));
+                window.storage = bridge.storage;
+                window.storageTypeLocal = bridge.STORAGE_TYPE.LOCAL_STORAGE;
+                window.storageTypePlatform = bridge.STORAGE_TYPE.PLATFORM_INTERNAL;
+                var lang = bridge.platform.language;
+                var domain = bridge.platform.tld;
+                callback(lang + ' ' + domain);
+            }));
     }
 }
 
 
 
 function playSound(id) {
-if (/iPad|iPhone|iPod/.test(userAgent1) && !window.MSStream || /Mac/i.test(userAgent1)) {
-        soundManager.play(id, { volume: 50, onfinish: function() {
-                                    playSound(id);
-                                  }});
-}else {
-  if (!isPlaying) {
-    isPlaying = true;
-    soundSource.start(0, startTime);
-  }
-  }
+    if (/iPad|iPhone|iPod/.test(userAgent1) && !window.MSStream || /Mac/i.test(userAgent1)) {
+        soundManager.play(id, {
+            volume: 50, onfinish: function () {
+                playSound(id);
+            }
+        });
+    } else {
+        if (!isPlaying) {
+            isPlaying = true;
+            soundSource.start(0, startTime);
+        }
+    }
 }
 
 function pauseSound(id) {
     if (/iPad|iPhone|iPod/.test(userAgent1) && !window.MSStream || /Mac/i.test(userAgent1)) {
         soundManager.pause(id);
-    }else {
+    } else {
 
-  if (isPlaying) {
-    isPlaying = false;
-    audioContext.suspend().then(function() {
-      startTime = audioContext.currentTime;
-    });
-  }
-}
+        if (isPlaying) {
+            isPlaying = false;
+            audioContext.suspend().then(function () {
+                startTime = audioContext.currentTime;
+            });
+        }
+    }
 }
 
 function resumeSound(id) {
     if (/iPad|iPhone|iPod/.test(userAgent1) && !window.MSStream || /Mac/i.test(userAgent1)) {
         soundManager.resume(id);
-    }else {
-  if (!isPlaying) {
-    isPlaying = true;
-    audioContext.resume().then(function() {
-      startTime = audioContext.currentTime - startTime;
-      playSound();
-    });
-  }
-}
+    } else {
+        if (!isPlaying) {
+            isPlaying = true;
+            audioContext.resume().then(function () {
+                startTime = audioContext.currentTime - startTime;
+                playSound();
+            });
+        }
+    }
 }
 
 function stopSound(id) {
-  if (/iPad|iPhone|iPod/.test(userAgent1) && !window.MSStream || /Mac/i.test(userAgent1)) {
-      soundManager.stop(id);
-  }else {
-  if (isPlaying) {
-    isPlaying = false;
-    soundSource.stop();
-  }
-}
+    if (/iPad|iPhone|iPod/.test(userAgent1) && !window.MSStream || /Mac/i.test(userAgent1)) {
+        soundManager.stop(id);
+    } else {
+        if (isPlaying) {
+            isPlaying = false;
+            soundSource.stop();
+        }
+    }
 }
 
-function getLeaderBoardJs(callback){
+function getLeaderBoardJs(callback) {
     let getEntriesOptions = {
         'yandex': {
             leaderboardName: 'BestDragons',
@@ -153,20 +155,20 @@ function getLeaderBoardJs(callback){
     }
     var playerDataArray = [];
     bridge.leaderboard.getEntries(getEntriesOptions)
-        .then(function(entries) {
+        .then(function (entries) {
             entries.forEach(function (e) {
-            let playerData = [e.rank, e.name, e.score, e.photos[0]];
-            playerDataArray.push(playerData);
+                let playerData = [e.rank, e.name, e.score, e.photos[0]];
+                playerDataArray.push(playerData);
             });
             callback(playerDataArray);
         })
         .catch(function (error) {
-                   console.log(error);
+            console.log(error);
         });
 }
 
 function updateLeaderboardJs(scores, callback) {
-       if (bridge.player.isAuthorized) {
+    if (bridge.player.isAuthorized) {
         let getScoreOptions = {
             'yandex': {
                 leaderboardName: 'BestDragons',
@@ -189,49 +191,49 @@ function updateLeaderboardJs(scores, callback) {
                             console.log(error);
                         });
                     callback('update scores ' + scores);
-                }else {
+                } else {
                     callback('not best')
                 }
             })
             .catch(function (error) {
                 let setScoreOptions = {
-                                        'yandex': {
-                                            leaderboardName: 'BestDragons',
-                                            score: scores
-                                        }
-                                    }
-                                    bridge.leaderboard.setScore(setScoreOptions)
-                                        .then(function () {
-                                            console.log('LeaderBoard Update');
-                                        })
-                                        .catch(function (error) {
-                                            console.log(error);
-                                        });
-                                    callback('update scores ' + scores);
+                    'yandex': {
+                        leaderboardName: 'BestDragons',
+                        score: scores
+                    }
+                }
+                bridge.leaderboard.setScore(setScoreOptions)
+                    .then(function () {
+                        console.log('LeaderBoard Update');
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+                callback('update scores ' + scores);
             });
     } else {
         callback('update scores failed you are not auth');
     }
 }
 
-function isGameVisibleJs(callback){
+function isGameVisibleJs(callback) {
     bridge.game.on(bridge.EVENT_NAME.VISIBILITY_STATE_CHANGED,
-    function (state) {
-                callback(state);
-            });
+        function (state) {
+            callback(state);
+        });
 }
 
 function loadFromSdk(key, callback) {
     var resultLocal;
-        window.storage.get(key, window.storageTypeLocal)
-            .then(function (data) {
-                if (data === null || typeof data === 'undefined') {
-                    resultLocal = '0';
-                } else {
-                    resultLocal = data.toString();
-                }
-                callback(resultLocal);
-            });
+    window.storage.get(key, window.storageTypeLocal)
+        .then(function (data) {
+            if (data === null || typeof data === 'undefined') {
+                resultLocal = '0';
+            } else {
+                resultLocal = data.toString();
+            }
+            callback(resultLocal);
+        });
 }
 
 
@@ -259,15 +261,15 @@ function authorization(callback) {
     }
 }
 
-function getPlayerNameJs(callback){
-    if (bridge.player.isAuthorized){
+function getPlayerNameJs(callback) {
+    if (bridge.player.isAuthorized) {
         callback(bridge.player.name);
-    }else {
+    } else {
         callback('not authorized');
     }
 }
 
-function isPlayerAuthorizedJs(callback){
+function isPlayerAuthorizedJs(callback) {
     callback(bridge.player.isAuthorized);
 }
 
@@ -281,7 +283,7 @@ function adwStateJs(callback) {
             callback(state);
         });
 }
-function showRewardedAdwJs(){
+function showRewardedAdwJs() {
     bridge.advertisement.showRewarded();
 }
 function adwRewardedStateJs(callback) {
@@ -291,8 +293,8 @@ function adwRewardedStateJs(callback) {
         });
 }
 
-function inviteFriendsJs(callback){
-    if (bridge.social.isInviteFriendsSupported){
+function inviteFriendsJs(callback) {
+    if (bridge.social.isInviteFriendsSupported) {
         bridge.social.inviteFriends()
             .then(() => {
                 callback('success')
@@ -304,21 +306,21 @@ function inviteFriendsJs(callback){
     }
 }
 
-function shareJs(callback){
-if (bridge.social.isShareSupported){
-    let shareOptions = {
-        'vk': {
-            link: 'https://vk.com/app51892854'
-        }
-    };
-    bridge.social.share(shareOptions)
-        .then(() => {
-            callback('success share')
-        })
-        .catch(error => {
-            console.log(error);
-            callback('not supported');
-        });
+function shareJs(callback) {
+    if (bridge.social.isShareSupported) {
+        let shareOptions = {
+            'vk': {
+                link: 'https://vk.com/app51892854'
+            }
+        };
+        bridge.social.share(shareOptions)
+            .then(() => {
+                callback('success share')
+            })
+            .catch(error => {
+                console.log(error);
+                callback('not supported');
+            });
     }
 }
 
