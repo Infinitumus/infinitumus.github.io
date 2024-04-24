@@ -13,7 +13,7 @@
 </head>
 
 <body>
-       <div class="noselect" align="center" id="embed-html">
+       <div class="noselect" id="embed-html">
               <script class="noselect" type="text/javascript" src="html/html.nocache.js"></script>
        </div>
 </body>
@@ -32,6 +32,13 @@
        document.addEventListener('contextmenu', event => event.preventDefault());
        document.getElementById('embed-html').addEventListener('mousedown', handleMouseDown, false);
        document.getElementById('embed-html').addEventListener('mouseup', handleMouseUp, false);
+
+       var height = window.innerHeight;
+       if (height > 1920) {
+              height = 1920;
+       }
+       var element = document.getElementById('embed-html');
+       element.style.height = height + 'px';
 
 </script>
 
