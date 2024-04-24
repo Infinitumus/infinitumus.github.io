@@ -3,6 +3,16 @@ canvas {
   outline: none;
 }
 
+#embed-html {
+  background-color: #000000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+
 .noselect {
   -webkit-touch-callout: none;
   /* iOS Safari */
