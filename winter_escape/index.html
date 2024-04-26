@@ -16,6 +16,7 @@
        <div class="noselect" id="embed-html">
               <script class="noselect" type="text/javascript" src="html/html.nocache.js"></script>
        </div>
+       <canvas id="snowCanvas"></canvas>
 </body>
 
 <script>
@@ -33,7 +34,58 @@
        document.getElementById('embed-html').addEventListener('mousedown', handleMouseDown, false);
        document.getElementById('embed-html').addEventListener('mouseup', handleMouseUp, false);
 
+var canvas = document.getElementById('snowCanvas');
+var ctx = canvas.getContext('2d');
 
+// Установка размера canvas
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+// Создание снежинок
+var snowflakes = [];
+for (var i = 0; i < 100; i++) {
+  snowflakes.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    radius: Math.random() * 3 + 1,
+    density: Math.random() * 5
+  });
+}
+
+// Функция отрисовки снега
+function drawSnow() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  ctx.fillStyle = 'white';
+  ctx.beginPath();
+  for (var i = 0; i < snowflakes.length; i++) {
+    var flake = snowflakes[i];
+    ctx.moveTo(flake.x, flake.y);
+    ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2, true);
+  }
+  ctx.fill();
+  moveSnow();
+}
+
+// Функция движения снега
+function moveSnow() {
+  for (var i = 0; i < snowflakes.length; i++) {
+    var flake = snowflakes[i];
+    flake.y += Math.pow(flake.density, 2) + 1;
+    if (flake.y > canvas.height) {
+      flake.y = 0;
+    }
+  }
+}
+
+// Анимация снега
+function updateSnow() {
+  drawSnow();
+  requestAnimationFrame(updateSnow);
+}
+
+// Запуск анимации
+updateSnow();
 
 </script>
 
