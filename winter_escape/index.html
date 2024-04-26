@@ -56,17 +56,17 @@ function drawSnow() {
 function moveSnow() {
   for (var i = 0; i < snowflakes.length; i++) {
     var flake = snowflakes[i];
-    flake.y += Math.pow(flake.density, 2) + 1;
-    flake.x += flake.speedX; // Движение влево
+    flake.y += Math.pow(flake.density, 2) + 1; // Вертикальное движение
+    flake.x -= flake.density + 2; // Увеличиваем горизонтальное движение влево
 
+    // Проверяем границы и переносим снежинку на противоположную сторону, если она выходит за пределы
     if (flake.y > canvas.height) {
-      flake.y = 0;
+      flake.y = -flake.radius; // Стартуем чуть выше экрана, чтобы снежинка полностью вошла в поле зрения
       flake.x = Math.random() * canvas.width;
     }
-    if (flake.x < 0) {
-      flake.x += canvas.width;
-    } else if (flake.x > canvas.width) {
-      flake.x -= canvas.width;
+    if (flake.x < -flake.radius) { // Если снежинка вышла за левую границу
+      flake.x = canvas.width + flake.radius; // Перемещаем её на правую границу
+      flake.y = Math.random() * canvas.height; // Случайная позиция по вертикали
     }
   }
 }
