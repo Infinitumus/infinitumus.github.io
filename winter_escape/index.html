@@ -49,7 +49,8 @@ for (var i = 0; i < 100; i++) {
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height,
     radius: Math.random() * 3 + 1,
-    density: Math.random() * 5
+    density: Math.random() * 5,
+    speedX: Math.random() * 1 - 0.5, // Добавляем горизонтальную скорость для движения влево
   });
 }
 
@@ -73,13 +74,14 @@ function moveSnow() {
   for (var i = 0; i < snowflakes.length; i++) {
     var flake = snowflakes[i];
     flake.y += Math.pow(flake.density, 2) + 1;
+    flake.x += flake.speedX; // Движение влево
+
+    // Проверяем границы и переносим снежинку на противоположную сторону, если она выходит за пределы
     if (flake.y > canvas.height) {
       flake.y = 0;
+      flake.x = Math.random() * canvas.width;
     }
-  }
-}
-
-// Анимация снега
+    // Анимация снега
 function updateSnow() {
   drawSnow();
   requestAnimationFrame(updateSnow);
@@ -87,7 +89,6 @@ function updateSnow() {
 
 // Запуск анимации
 updateSnow();
-
 </script>
 
 </html>
