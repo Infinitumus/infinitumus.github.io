@@ -3,19 +3,14 @@ canvas {
   outline: none;
 }
 
-body {
-  background-color: #000000;
-
+html, body {
+background-color: black;
+  overflow: hidden;
 }
 
-#embed-html {
-  position: relative; /* Для позиционирования canvas */
-}
 
 #snowCanvas {
   position: absolute;
-  top: 0;
-  left: 0;
   pointer-events: none; /* Чтобы клики проходили сквозь canvas */
 }
 
@@ -68,3 +63,5 @@ body {
 .superdev:hover {
   background-color: rgb(100, 100, 100);
 }
+
+
