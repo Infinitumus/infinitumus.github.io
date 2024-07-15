@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -8,21 +8,20 @@
 		content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimal-ui, shrink-to-fit=no">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
 	<title>Connect 1.0</title>
-	<style type='text/css'>
+	<style type="text/css">
 		/* Disable user selection to avoid strange bug in Chrome on Windows:
 	* Selecting a text outside the canvas, then clicking+draging would
 	* drag the selected text but block mouse down/up events to the engine.
 	*/
+
+		html,
 		body {
-
-			position: fixed;
-			/* Prevent overscroll */
-
+			height: 100%;
 			margin: 0;
 			padding: 0;
 		}
+
 
 		.canvas-app-container {
 			width: 100%;
@@ -107,24 +106,23 @@
 		}
 
 		body {
+			background-color: #ffffff;
+			background-color: #ffffff;
 			background-image: url('bg.png');
 			background-size: cover;
-			/* Покрыть весь контейнер, сохраняя пропорции изображения */
-			background-position: center;
-			/* Центрировать изображение */
+			background-repeat: no-repeat;
+			background-position: center center;
 		}
 
 		.canvas-app-container {
-			.canvas-app-container {
-				background: rgba(250, 252, 255, 1);
-				background: -moz-linear-gradient(-45deg, rgba(250, 252, 255, 1) 0%, rgba(250, 252, 255, 1) 50%, rgba(245, 249, 255, 1) 50%, rgba(245, 249, 255, 1) 100%);
-				background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(250, 252, 255, 1)), color-stop(50%, rgba(250, 252, 255, 1)), color-stop(50%, rgba(245, 249, 255, 1)), color-stop(100%, rgba(245, 249, 255, 1)));
-				background: -webkit-linear-gradient(-45deg, rgba(250, 252, 255, 1) 0%, rgba(250, 252, 255, 1) 50%, rgba(245, 249, 255, 1) 50%, rgba(245, 249, 255, 1) 100%);
-				background: -o-linear-gradient(-45deg, rgba(250, 252, 255, 1) 0%, rgba(250, 252, 255, 1) 50%, rgba(245, 249, 255, 1) 50%, rgba(245, 249, 255, 1) 100%);
-				background: -ms-linear-gradient(-45deg, rgba(250, 252, 255, 1) 0%, rgba(250, 252, 255, 1) 50%, rgba(245, 249, 255, 1) 50%, rgba(245, 249, 255, 1) 100%);
-				background: linear-gradient(135deg, rgba(250, 252, 255, 1) 0%, rgba(250, 252, 255, 1) 50%, rgba(245, 249, 255, 1) 50%, rgba(245, 249, 255, 1) 100%);
-				filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fafcff', endColorstr='#f5f9ff', GradientType=1);
-			}
+			background: rgba(250, 252, 255, 1);
+			background: -moz-linear-gradient(-45deg, rgba(250, 252, 255, 1) 0%, rgba(250, 252, 255, 1) 50%, rgba(245, 249, 255, 1) 50%, rgba(245, 249, 255, 1) 100%);
+			background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(250, 252, 255, 1)), color-stop(50%, rgba(250, 252, 255, 1)), color-stop(50%, rgba(245, 249, 255, 1)), color-stop(100%, rgba(245, 249, 255, 1)));
+			background: -webkit-linear-gradient(-45deg, rgba(250, 252, 255, 1) 0%, rgba(250, 252, 255, 1) 50%, rgba(245, 249, 255, 1) 50%, rgba(245, 249, 255, 1) 100%);
+			background: -o-linear-gradient(-45deg, rgba(250, 252, 255, 1) 0%, rgba(250, 252, 255, 1) 50%, rgba(245, 249, 255, 1) 50%, rgba(245, 249, 255, 1) 100%);
+			background: -ms-linear-gradient(-45deg, rgba(250, 252, 255, 1) 0%, rgba(250, 252, 255, 1) 50%, rgba(245, 249, 255, 1) 50%, rgba(245, 249, 255, 1) 100%);
+			background: linear-gradient(135deg, rgba(250, 252, 255, 1) 0%, rgba(250, 252, 255, 1) 50%, rgba(245, 249, 255, 1) 50%, rgba(245, 249, 255, 1) 100%);
+			filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fafcff', endColorstr='#f5f9ff', GradientType=1);
 		}
 
 		.canvas-app-canvas {
@@ -134,10 +132,40 @@
 			background-image: url('logo.png');
 		}
 	</style>
+	<style type="text/css">
+		body {
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+		}
+	</style>
+	<meta name="og:title" content="Connect">
+	<script async
+		src="https://gs.eponesh.com/sdk/game-score.js?projectId=15484&amp;publicToken=uxq0fHPVeqFIDBpwHym7kvb97oZhGm7q&amp;callback=onGPInit"></script>
+	<script type="text/javascript">
+		window.onGPInit = (gp) => {
+			function init(gp, result) {
+				if (window.GamePushLib !== undefined && window.GamePushLib.init !== undefined) {
+					window.GamePushLib.init(gp, result);
+				} else {
+					window.GamePushInstance = gp;
+					window.GamePushInit = result;
+				}
+			}
+
+			gp.player.ready.then(
+				function () {
+					init(gp, true);
+				}).catch(
+					function () {
+						init(gp, false);
+					});
+		}
+	</script>
 </head>
 
 <body>
-
 	<div id="app-container" class="canvas-app-container">
 		<div id="running-from-file-warning" style="display: none; margin: 3em;">
 			<h1>Running from local file ⚠️</h1>
@@ -160,9 +188,8 @@
 		</div>
 	</div>
 	<!-- -->
-	<script id='engine-loader' type='text/javascript' src="dmloader.js"></script>
-
-	<script id='engine-start' type='text/javascript'>
+	<script id="engine-loader" type="text/javascript" src="dmloader.js"></script>
+	<script id="engine-start" type="text/javascript">
 		var runningFromFileWarning = document.getElementById("running-from-file-warning");
 		if (window.location.href.startsWith("file://")) {
 			runningFromFileWarning.style.display = "block";
@@ -172,13 +199,12 @@
 			runningFromFileWarning.parentNode.removeChild(runningFromFileWarning);
 		}
 	</script>
-
-	<script>
-		function openLinkInNewTab(url) {
-			window.open(url, '_blank');
-		}
-	</script>
-
 </body>
+
+<script>
+	function openLinkInNewTab(url) {
+		window.open(url, '_blank');
+	}
+</script>
 
 </html>
