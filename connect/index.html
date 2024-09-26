@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 	<title>Connect 1.0</title>
@@ -16,7 +16,6 @@
 
 		html,
 		body {
-			height: 100%;
 			margin: 0;
 			padding: 0;
 			overflow: hidden;
@@ -38,10 +37,15 @@
                                   supported by Chrome, Edge, Opera and Firefox */
 		}
 
+		@media screen and (max-width: 600px) {
+			body {
+				overflow-x: hidden;
+			}
+		}
+
 
 		.canvas-app-container {
-			width: 100%;
-			height: 100%;
+
 			position: absolute;
 			align-items: center;
 			justify-content: center;
@@ -57,15 +61,13 @@
 		#canvas {
 			outline: none;
 			border: 0;
-			width: 100%;
-			height: 100%;
+
 			vertical-align: bottom;
 		}
 
 		#canvas-container {
 			position: relative;
-			width: 100%;
-			height: 100%;
+
 			overflow: hidden;
 		}
 
