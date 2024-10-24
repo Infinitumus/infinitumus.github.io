@@ -108,7 +108,7 @@ max_instances = 1024
 max_input_stack_entries = 16
 
 [collection_proxy]
-max_count = 8
+max_count = 20
 
 [collectionfactory]
 max_count = 1000
@@ -173,7 +173,7 @@ app_icon =
 [html5]
 custom_heap_size = 0
 heap_size = 256
-htmlfile = /builtins/manifests/web/engine_template.html
+htmlfile = /index.html
 cssfile = /builtins/manifests/web/light_theme.css
 archive_location_prefix = archive
 archive_location_suffix = 
@@ -213,6 +213,7 @@ sleep_between_server_updates = 0
 settings = /liveupdate.settings
 enabled = 1
 mount_on_start = 1
+timeout = 100000
 
 [tilemap]
 max_count = 16
@@ -225,4 +226,7 @@ fixed_update_frequency = 60
 [gamepush]
 id = 15484
 token = uxq0fHPVeqFIDBpwHym7kvb97oZhGm7q
+
+[liveupdate_reszip]
+preload_file = resources.zip
 

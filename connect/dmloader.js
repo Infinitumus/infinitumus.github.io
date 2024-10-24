@@ -201,8 +201,8 @@ var FileLoader = {
 
 
 var EngineLoader = {
-    wasm_size: 2363178,
-    wasmjs_size: 347099,
+    wasm_size: 2363980,
+    wasmjs_size: 351764,
     asmjs_size: 4000000,
     wasm_instantiate_progress: 0,
 

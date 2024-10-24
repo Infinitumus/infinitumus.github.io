@@ -361,8 +361,8 @@ function createWasm() {
   };
   function receiveInstance(instance, module) {
     wasmExports = instance.exports;
-    wasmTable = wasmExports["Uh"];
-    addOnInit(wasmExports["Ph"]);
+    wasmTable = wasmExports["Vh"];
+    addOnInit(wasmExports["Qh"]);
     removeRunDependency("wasm-instantiate");
     return wasmExports;
   }
@@ -384,14 +384,14 @@ function createWasm() {
 var tempDouble;
 var tempI64;
 var ASM_CONSTS = {
-  276496: function _() {
+  276576: function _() {
     if (navigator.userAgent.toLowerCase().indexOf("chrome") > -1) {
       console.log("%c    %c    Made with Defold    %c    %c    https://www.defold.com", "background: #fd6623; padding:5px 0; border: 5px;", "background: #272c31; color: #fafafa; padding:5px 0;", "background: #39a3e4; padding:5px 0;", "background: #ffffff; color: #000000; padding:5px 0;");
     } else {
       console.log("Made with Defold -=[ https://www.defold.com ]=-");
     }
   },
-  276924: function _($0) {
+  277004: function _($0) {
     var jsResult;
     var isSuccess = 1;
     try {
@@ -405,13 +405,13 @@ var ASM_CONSTS = {
     var stringOnWasmHeap = stringToNewUTF8(jsResult);
     return stringOnWasmHeap;
   },
-  277192: function _() {
+  277272: function _() {
     document.removeEventListener("click", Module.__defold_interaction_listener);
     document.removeEventListener("keyup", Module.__defold_interaction_listener);
     document.removeEventListener("touchend", Module.__defold_interaction_listener);
     Module.__defold_interaction_listener = undefined;
   },
-  277480: function _() {
+  277560: function _() {
     Module.__defold_interaction_listener = function () {
       _dmScript_RunInteractionCallback();
     };
@@ -419,10 +419,10 @@ var ASM_CONSTS = {
     document.addEventListener("keyup", Module.__defold_interaction_listener);
     document.addEventListener("touchend", Module.__defold_interaction_listener);
   },
-  277801: function _($0) {
+  277881: function _($0) {
     Module.printErr(UTF8ToString($0));
   },
-  277840: function _($0) {
+  277920: function _($0) {
     Module.print(UTF8ToString($0));
   }
 };
@@ -4771,6 +4771,153 @@ function _dmDeviceJSQueue(id, samples, sample_count) {
 }
 function _dmGetDeviceSampleRate(id) {
   return window._dmJSDeviceShared.devices[id].sampleRate;
+}
+var ResZipFileLoader = {
+  options: {
+    retryCount: 5,
+    retryInterval: 1e3
+  },
+  request: function request(url, method, responseType, currentAttempt) {
+    if (typeof method === "undefined") throw "No method specified";
+    if (typeof method === "responseType") throw "No responseType specified";
+    if (typeof currentAttempt === "undefined") currentAttempt = 0;
+    var obj = {
+      send: function send() {
+        var onprogress = this.onprogress;
+        var onload = this.onload;
+        var onerror = this.onerror;
+        var xhr = new XMLHttpRequest();
+        xhr.open(method, url, true);
+        xhr.responseType = responseType;
+        xhr.onprogress = function (e) {
+          if (onprogress) onprogress(xhr, e);
+        };
+        xhr.onerror = function (e) {
+          if (currentAttempt == ResZipFileLoader.options.retryCount) {
+            if (onerror) onerror(xhr, e);
+            return;
+          }
+          currentAttempt = currentAttempt + 1;
+          setTimeout(obj.send.bind(obj), ResZipFileLoader.options.retryInterval);
+        };
+        xhr.onload = function (e) {
+          if (onload) onload(xhr, e);
+        };
+        xhr.send(null);
+      }
+    };
+    return obj;
+  },
+  size: function size(url, callback) {
+    var request = ResZipFileLoader.request(url, "HEAD", "text");
+    request.onerror = function (xhr, e) {
+      callback(undefined);
+    };
+    request.onload = function (xhr, e) {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          var total = xhr.getResponseHeader("content-length");
+          callback(total);
+        } else {
+          callback(undefined);
+        }
+      }
+    };
+    request.send();
+  },
+  load: function load(url, responseType, estimatedSize, onprogress, onerror, onload) {
+    var request = ResZipFileLoader.request(url, "GET", responseType);
+    request.onprogress = function (xhr, e) {
+      if (e.lengthComputable) {
+        onprogress(e.loaded, e.total);
+        return;
+      }
+      var contentLength = xhr.getResponseHeader("content-length");
+      var size = contentLength != undefined ? contentLength : estimatedSize;
+      if (size) {
+        onprogress(e.loaded, size);
+      } else {
+        onprogress(e.loaded, e.loaded);
+      }
+    };
+    request.onerror = function (xhr, e) {
+      onerror("Error loading '" + url + "' (" + e + ")");
+    };
+    request.onload = function (xhr, e) {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          var res = xhr.response;
+          if (responseType == "json" && typeof res === "string") {
+            onload(JSON.parse(res));
+          } else {
+            onload(res);
+          }
+        } else {
+          onerror("Error loading '" + url + "' (" + e + ")");
+        }
+      }
+    };
+    request.send();
+  }
+};
+var ResZip = {
+  _preloads: {}
+};
+function _dmResZipRequestFileAsync(url, context, _onprogress, _onerror, _onload) {
+  var callbacks = {
+    onprogress: function onprogress(loaded, total) {
+      getWasmTableEntry(_onprogress)(context, loaded, total);
+    },
+    onerror: function onerror(err) {
+      var pError = stringToNewUTF8(err);
+      getWasmTableEntry(_onerror)(context, pError);
+      _free(pError);
+    },
+    onload: function onload(response) {
+      var ab = new Uint8Array(response);
+      var b = _malloc(ab.length);
+      HEAPU8.set(ab, b);
+      getWasmTableEntry(_onload)(context, b, ab.length);
+      _free(b);
+    }
+  };
+  if (context === undefined) {
+    var preload = {
+      events: {},
+      handler: function handler() {
+        var args = Array.prototype.slice.call(arguments);
+        var name = args.shift();
+        preload.events[name] = args;
+      }
+    };
+    ResZip._preloads[url] = preload;
+    ResZipFileLoader.load(url, "arraybuffer", 0, function (loaded, total) {
+      preload.handler("onprogress", loaded, total);
+    }, function (err) {
+      preload.handler("onerror", err);
+    }, function (response) {
+      preload.handler("onload", response);
+    });
+    return;
+  }
+  url = UTF8ToString(url);
+  if (ResZip._preloads[url]) {
+    var preload = ResZip._preloads[url];
+    delete ResZip._preloads[url];
+    preload.handler = function () {
+      var args = Array.prototype.slice.call(arguments);
+      var name = args.shift();
+      callbacks[name].apply(null, args);
+    };
+    ["onprogress", "onerror", "onload"].forEach(function (name) {
+      var args = preload.events[name];
+      if (args !== undefined) {
+        callbacks[name].apply(null, args);
+      }
+    });
+  } else {
+    ResZipFileLoader.load(url, "arraybuffer", 0, callbacks.onprogress, callbacks.onerror, callbacks.onload);
+  }
 }
 function _dmScriptHttpRequestAsync(method, url, headers, arg, onload, onerror, onprogress, send_data, send_data_length, timeout) {
   var xhr = new XMLHttpRequest();
@@ -9591,46 +9738,47 @@ for (var i = 0; i < 288; ++i) {
   miniTempWebGLIntBuffers[i] = miniTempWebGLIntBuffersStorage.subarray(0, i + 1);
 }
 var wasmImports = {
-  Oh: _GamePush_CallApi,
-  Nh: _GamePush_Init,
-  Mh: _GamePush_RegisterCallback,
-  Lh: _GamePush_RemoveCallback,
+  Ph: _GamePush_CallApi,
+  Oh: _GamePush_Init,
+  Nh: _GamePush_RegisterCallback,
+  Mh: _GamePush_RemoveCallback,
   b: ___assert_fail,
-  Kh: ___syscall__newselect,
-  Jh: ___syscall_accept4,
-  Ih: ___syscall_bind,
-  Hh: ___syscall_connect,
-  Gh: ___syscall_dup3,
+  Lh: ___syscall__newselect,
+  Kh: ___syscall_accept4,
+  Jh: ___syscall_bind,
+  Ih: ___syscall_connect,
+  Hh: ___syscall_dup3,
   f: ___syscall_fcntl64,
-  Fh: ___syscall_getpeername,
-  Eh: ___syscall_getsockname,
+  Gh: ___syscall_getpeername,
+  Fh: ___syscall_getsockname,
   Z: ___syscall_getsockopt,
-  Dh: ___syscall_ioctl,
-  Ch: ___syscall_listen,
-  Bh: ___syscall_mkdirat,
+  Eh: ___syscall_ioctl,
+  Dh: ___syscall_listen,
+  Ch: ___syscall_mkdirat,
   Y: ___syscall_openat,
-  Ah: ___syscall_poll,
-  zh: ___syscall_readlinkat,
-  yh: ___syscall_recvfrom,
-  xh: ___syscall_renameat,
-  wh: ___syscall_rmdir,
-  vh: ___syscall_sendto,
+  Bh: ___syscall_poll,
+  Ah: ___syscall_readlinkat,
+  zh: ___syscall_recvfrom,
+  yh: ___syscall_renameat,
+  xh: ___syscall_rmdir,
+  wh: ___syscall_sendto,
   sa: ___syscall_socket,
-  uh: ___syscall_stat64,
+  vh: ___syscall_stat64,
   X: ___syscall_unlinkat,
-  rh: __emscripten_get_now_is_monotonic,
-  qh: __emscripten_lookup_name,
-  ph: __emscripten_system,
-  oh: __emscripten_throw_longjmp,
+  sh: __emscripten_get_now_is_monotonic,
+  rh: __emscripten_lookup_name,
+  qh: __emscripten_system,
+  ph: __emscripten_throw_longjmp,
   ya: __gmtime_js,
   xa: __localtime_js,
   wa: __mktime_js,
-  nh: __tzset_js,
+  oh: __tzset_js,
   F: _abort,
-  mh: _dmDeviceJSFreeBufferSlots,
-  lh: _dmDeviceJSOpen,
-  kh: _dmDeviceJSQueue,
-  jh: _dmGetDeviceSampleRate,
+  nh: _dmDeviceJSFreeBufferSlots,
+  mh: _dmDeviceJSOpen,
+  lh: _dmDeviceJSQueue,
+  kh: _dmGetDeviceSampleRate,
+  jh: _dmResZipRequestFileAsync,
   ih: _dmScriptHttpRequestAsync,
   hh: _dmSysGetApplicationPath,
   gh: _dmSysGetUserAgent,
@@ -9919,8 +10067,8 @@ var wasmImports = {
   V: _emscripten_set_main_loop_arg,
   d: _emscripten_webgl_enable_extension,
   Xb: _emscripten_webgl_get_current_context,
-  th: _environ_get,
-  sh: _environ_sizes_get,
+  uh: _environ_get,
+  th: _environ_sizes_get,
   U: _exit,
   G: _fd_close,
   ra: _fd_read,
@@ -10066,58 +10214,58 @@ var wasmImports = {
 };
 var wasmExports = createWasm();
 var _wasm_call_ctors = function ___wasm_call_ctors() {
-  return (_wasm_call_ctors = wasmExports["Ph"])();
+  return (_wasm_call_ctors = wasmExports["Qh"])();
 };
 var _dmExportedSymbols = Module["_dmExportedSymbols"] = function () {
-  return (_dmExportedSymbols = Module["_dmExportedSymbols"] = wasmExports["Qh"])();
+  return (_dmExportedSymbols = Module["_dmExportedSymbols"] = wasmExports["Rh"])();
 };
 var _main = Module["_main"] = function (a0, a1) {
-  return (_main = Module["_main"] = wasmExports["Rh"])(a0, a1);
+  return (_main = Module["_main"] = wasmExports["Sh"])(a0, a1);
 };
 var _malloc = Module["_malloc"] = function (a0) {
-  return (_malloc = Module["_malloc"] = wasmExports["Sh"])(a0);
+  return (_malloc = Module["_malloc"] = wasmExports["Th"])(a0);
 };
 var _free = Module["_free"] = function (a0) {
-  return (_free = Module["_free"] = wasmExports["Th"])(a0);
+  return (_free = Module["_free"] = wasmExports["Uh"])(a0);
 };
 var _htonl2 = function _htonl(a0) {
-  return (_htonl2 = wasmExports["Vh"])(a0);
+  return (_htonl2 = wasmExports["Wh"])(a0);
 };
 var _dmScript_Html5ReportOperationSuccess = Module["_dmScript_Html5ReportOperationSuccess"] = function (a0) {
-  return (_dmScript_Html5ReportOperationSuccess = Module["_dmScript_Html5ReportOperationSuccess"] = wasmExports["Wh"])(a0);
+  return (_dmScript_Html5ReportOperationSuccess = Module["_dmScript_Html5ReportOperationSuccess"] = wasmExports["Xh"])(a0);
 };
 var _dmScript_RunInteractionCallback = Module["_dmScript_RunInteractionCallback"] = function () {
-  return (_dmScript_RunInteractionCallback = Module["_dmScript_RunInteractionCallback"] = wasmExports["Xh"])();
+  return (_dmScript_RunInteractionCallback = Module["_dmScript_RunInteractionCallback"] = wasmExports["Yh"])();
 };
 var _setTempRet = function setTempRet0(a0) {
-  return (_setTempRet = wasmExports["Yh"])(a0);
+  return (_setTempRet = wasmExports["Zh"])(a0);
 };
 var _htons2 = function _htons(a0) {
-  return (_htons2 = wasmExports["Zh"])(a0);
+  return (_htons2 = wasmExports["_h"])(a0);
 };
 var _ntohs2 = function _ntohs(a0) {
-  return (_ntohs2 = wasmExports["_h"])(a0);
+  return (_ntohs2 = wasmExports["$h"])(a0);
 };
 var _JSWriteDump = Module["_JSWriteDump"] = function (a0) {
-  return (_JSWriteDump = Module["_JSWriteDump"] = wasmExports["$h"])(a0);
+  return (_JSWriteDump = Module["_JSWriteDump"] = wasmExports["ai"])(a0);
 };
 var _setThrew2 = function _setThrew(a0, a1) {
-  return (_setThrew2 = wasmExports["ai"])(a0, a1);
+  return (_setThrew2 = wasmExports["bi"])(a0, a1);
 };
 var _stackSave = function stackSave() {
-  return (_stackSave = wasmExports["bi"])();
+  return (_stackSave = wasmExports["ci"])();
 };
 var _stackRestore = function stackRestore(a0) {
-  return (_stackRestore = wasmExports["ci"])(a0);
+  return (_stackRestore = wasmExports["di"])(a0);
 };
 var _stackAlloc = function stackAlloc(a0) {
-  return (_stackAlloc = wasmExports["di"])(a0);
+  return (_stackAlloc = wasmExports["ei"])(a0);
 };
 var dynCall_jii = Module["dynCall_jii"] = function (a0, a1, a2) {
-  return (dynCall_jii = Module["dynCall_jii"] = wasmExports["ei"])(a0, a1, a2);
+  return (dynCall_jii = Module["dynCall_jii"] = wasmExports["fi"])(a0, a1, a2);
 };
 var dynCall_ji = Module["dynCall_ji"] = function (a0, a1) {
-  return (dynCall_ji = Module["dynCall_ji"] = wasmExports["fi"])(a0, a1);
+  return (dynCall_ji = Module["dynCall_ji"] = wasmExports["gi"])(a0, a1);
 };
 function invoke_vii(index, a1, a2) {
   var sp = _stackSave();
